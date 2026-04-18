@@ -10,6 +10,12 @@ Classificatie van dinosaurus afbeeldingen in 7 soorten met behulp van transfer l
 
 **Resultaat: 91.3% validation accuracy**
 
+### Dataset voorbeelden
+
+3 samples per klasse uit de trainingdata (7 soorten, 1264 afbeeldingen):
+
+![Dinosaur Samples](images/dl_samples.jpg)
+
 ### Training journey
 
 Progressieve verbetering over drie trainingsfases:
