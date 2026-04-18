@@ -8,7 +8,7 @@ Twee challenges uit de cursus Artificial Intelligence (Thomas More, Toegepaste I
 
 Classificatie van dinosaurus afbeeldingen in 7 soorten met behulp van transfer learning (EfficientNetB0). Systematische 3-fase aanpak: screening, deep training en fine-tuning.
 
-**Resultaat: 91.3% validation accuracy**
+**Resultaat: 91.3% validation accuracy** | [Bekijk de presentatie](https://stijn-portfolio.github.io/ai-notebooks/dl-challenge/presentatie/overzicht.html)
 
 ### Dataset voorbeelden
 
@@ -45,7 +45,7 @@ Het model is niet alleen accuraat, maar ook zelfverzekerd bij correcte voorspell
 | Bestand | Beschrijving |
 |---------|-------------|
 | `dl-challenge/dinosaur-classification.ipynb` | Volledig notebook met EDA, training en evaluatie |
-| `dl-challenge/presentatie/` | Interactieve HTML presentatie (12 slides) |
+| `dl-challenge/presentatie/` | [Interactieve HTML presentatie (12 slides)](https://stijn-portfolio.github.io/ai-notebooks/dl-challenge/presentatie/overzicht.html) |
 | `dl-challenge/results/` | Training metrics en voorspellingen (JSON) |
 | `dl-challenge/misclassified/` | Voorbeelden van foutieve classificaties |
 
