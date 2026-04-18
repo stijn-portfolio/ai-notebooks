@@ -1,0 +1,470 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Finale Resultaten</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .results-hero {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(39, 174, 96, 0.3);
+        }
+
+        .hero-accuracy {
+            font-size: 4.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .hero-achievement {
+            font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .class-performance {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .performance-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .class-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .class-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #bdc3c7;
+        }
+
+        .class-item.excellent {
+            border-left-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+        }
+
+        .class-item.good {
+            border-left-color: #f39c12;
+            background: rgba(243, 156, 18, 0.1);
+        }
+
+        .class-item.challenging {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .class-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .class-emoji {
+            font-size: 1.5em;
+        }
+
+        .class-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .class-accuracy {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .class-accuracy.excellent {
+            color: #27ae60;
+        }
+
+        .class-accuracy.good {
+            color: #f39c12;
+        }
+
+        .class-accuracy.challenging {
+            color: #e74c3c;
+        }
+
+        .summary-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+
+        .stat-card.best {
+            border-top-color: #27ae60;
+        }
+
+        .stat-card.challenging {
+            border-top-color: #e74c3c;
+        }
+
+        .stat-card.average {
+            border-top-color: #f39c12;
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        .stat-detail {
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .insights-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .insights-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .insight-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .insight-icon {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .insight-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .insight-text {
+            font-size: 0.9em;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 7/12</div>
+                
+        <div class="slide-title">🏆 Finale Resultaten</div>
+
+        <div class="results-hero">
+            <div class="hero-accuracy">91.3%</div>
+            <div class="hero-subtitle">Validation Accuracy</div>
+            <div class="hero-achievement">🏆 EXCELLENT PERFORMANCE 🏆</div>
+        </div>
+
+        <div class="performance-grid">
+            <div class="class-performance">
+                <div class="performance-header">🦕 Per-Klasse Performance</div>
+                <div class="class-list">
+                    <div class="class-item excellent">
+                        <div class="class-info">
+                            <span class="class-emoji">🛡️</span>
+                            <span class="class-name">Ankylosaurus</span>
+                        </div>
+                        <div class="class-accuracy excellent">100.0%</div>
+                    </div>
+
+                    <div class="class-item excellent">
+                        <div class="class-info">
+                            <span class="class-emoji">👑</span>
+                            <span class="class-name">Triceratops</span>
+                        </div>
+                        <div class="class-accuracy excellent">97.4%</div>
+                    </div>
+
+                    <div class="class-item excellent">
+                        <div class="class-info">
+                            <span class="class-emoji">⚔️</span>
+                            <span class="class-name">Stegosaurus</span>
+                        </div>
+                        <div class="class-accuracy excellent">97.1%</div>
+                    </div>
+
+                    <div class="class-item excellent">
+                        <div class="class-info">
+                            <span class="class-emoji">🦕</span>
+                            <span class="class-name">Diplodocus</span>
+                        </div>
+                        <div class="class-accuracy excellent">93.5%</div>
+                    </div>
+
+                    <div class="class-item excellent">
+                        <div class="class-info">
+                            <span class="class-emoji">🎺</span>
+                            <span class="class-name">Parasaurolophus</span>
+                        </div>
+                        <div class="class-accuracy excellent">92.0%</div>
+                    </div>
+
+                    <div class="class-item good">
+                        <div class="class-info">
+                            <span class="class-emoji">🦖</span>
+                            <span class="class-name">T-Rex</span>
+                        </div>
+                        <div class="class-accuracy good">84.6%</div>
+                    </div>
+
+                    <div class="class-item challenging">
+                        <div class="class-info">
+                            <span class="class-emoji">⚡</span>
+                            <span class="class-name">Velociraptor</span>
+                        </div>
+                        <div class="class-accuracy challenging">75.6%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-stats">
+                <div class="stat-card best">
+                    <div class="stat-icon">🥇</div>
+                    <div class="stat-value">100.0%</div>
+                    <div class="stat-label">Beste Klasse</div>
+                    <div class="stat-detail">Ankylosaurus</div>
+                </div>
+
+                <div class="stat-card challenging">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-value">75.6%</div>
+                    <div class="stat-label">Uitdagendst</div>
+                    <div class="stat-detail">Velociraptor</div>
+                </div>
+
+                <div class="stat-card average">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">91.5%</div>
+                    <div class="stat-label">Gemiddelde</div>
+                    <div class="stat-detail">Alle klassen</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insights-section">
+            <div class="insights-header">🔍 Performance Insights</div>
+
+            <div class="insights-grid">
+                <div class="insight-box">
+                    <div class="insight-icon">🎯</div>
+                    <div class="insight-title">Perfecte Prestatie</div>
+                    <div class="insight-text">Ankylosaurus 100% accuracy<br>Uitstekende herkenning</div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-icon">🤔</div>
+                    <div class="insight-title">Velociraptor Challenge</div>
+                    <div class="insight-text">Vaak verward met T-Rex<br>Carnivoor gelijkenis</div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-icon">⭐</div>
+                    <div class="insight-title">Consistente Kwaliteit</div>
+                    <div class="insight-text">5 van 7 klassen >92%<br>Alleen 2 klassen <85%</div>
+                </div>
+            </div>
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_6.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">7 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_8.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 7 > 1) {
+                    window.location.href = 'dia_6.html';
+                } else if (e.key === 'ArrowRight' && 7 < 12) {
+                    window.location.href = 'dia_8.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

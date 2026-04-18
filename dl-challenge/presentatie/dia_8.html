@@ -1,0 +1,515 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Model Evaluatie</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .evaluation-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .evaluation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .confusion-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #e74c3c;
+        }
+
+        .section-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .confusion-matrix {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .confusion-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .matrix-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .stat-item {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        .confusion-insights {
+            margin-top: 15px;
+        }
+
+        .insight-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+        }
+
+        .insight-icon {
+            font-size: 1.2em;
+        }
+
+        .insight-text {
+            font-size: 0.9em;
+            color: #2c3e50;
+        }
+
+        .confidence-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #27ae60;
+        }
+
+        .confidence-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .confidence-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .confidence-card.correct {
+            border-left: 4px solid #27ae60;
+        }
+
+        .confidence-card.incorrect {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .confidence-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .confidence-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .confidence-bars {
+            margin: 20px 0;
+        }
+
+        .confidence-bar {
+            margin: 15px 0;
+        }
+
+        .bar-label {
+            font-size: 0.9em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .bar-container {
+            background: #ecf0f1;
+            height: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 12px;
+            position: relative;
+            transition: width 0.8s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+        }
+
+        .bar-fill.high {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+
+        .bar-fill.medium {
+            background: linear-gradient(90deg, #f39c12, #e67e22);
+        }
+
+        .bar-fill.low {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .bar-text {
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        .confidence-highlight {
+            background: rgba(255, 235, 59, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ffeb3b;
+        }
+
+        .highlight-text {
+            font-size: 0.95em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .error-analysis {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .error-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .error-examples {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .error-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .error-type {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .error-detail {
+            font-size: 0.9em;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 8/12</div>
+                
+        <div class="slide-title">📊 Model Evaluatie</div>
+
+        <div class="evaluation-header">
+            <strong>Comprehensive Model Analysis</strong><br>
+            Confusion Matrix • Confidence Calibration • Error Pattern Analysis
+        </div>
+
+        <div class="evaluation-grid">
+            <div class="confusion-section">
+                <div class="section-header">
+                    🤔 <span>Confusion Matrix</span>
+                </div>
+
+                <div class="confusion-matrix">
+                    <img src="cm.jpeg" alt="Confusion Matrix" class="confusion-image">
+                </div>
+
+                <div class="matrix-stats">
+                    <div class="stat-item">252 Validation Samples</div>
+                    <div class="stat-item">230 Correct • 22 Incorrect</div>
+                </div>
+
+                <div class="confusion-insights">
+                    <div class="insight-item">
+                        <span class="insight-icon">🎯</span>
+                        <span class="insight-text"><strong>Perfect:</strong> Ankylosaurus 100% accuracy</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-icon">⚠️</span>
+                        <span class="insight-text"><strong>Grootste verwarring:</strong> Velociraptor → T-Rex (6x)</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-icon">🔄</span>
+                        <span class="insight-text"><strong>Patroon:</strong> Carnivoren onderling verward</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confidence-section">
+                <div class="section-header">
+                    📈 <span>Confidence Analyse</span>
+                </div>
+
+                <div class="confidence-stats">
+                    <div class="confidence-card correct">
+                        <div class="confidence-value">95.9%</div>
+                        <div class="confidence-label">Gemiddelde Confidence<br>(Correcte Voorspellingen)</div>
+                    </div>
+                    <div class="confidence-card incorrect">
+                        <div class="confidence-value">72.7%</div>
+                        <div class="confidence-label">Gemiddelde Confidence<br>(Foute Voorspellingen)</div>
+                    </div>
+                </div>
+
+                <div class="confidence-highlight">
+                    <div class="highlight-text">
+                        ✅ Excellent confidence calibratie:<br>
+                        Model is zekerder bij correcte voorspellingen
+                    </div>
+                </div>
+
+                <div class="confidence-bars">
+                    <div class="confidence-bar">
+                        <div class="bar-label">Hoge Confidence (>90%)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill high" style="width: 81.0%">
+                                <div class="bar-text">204/252 (81.0%)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="confidence-bar">
+                        <div class="bar-label">Medium Confidence (70-90%)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill medium" style="width: 10.7%">
+
+                            </div>
+                            <div class="bar-text">27/252 (10.7%)</div>
+                        </div>
+                         <div class="bar-text">27/252 (10.7%)</div>
+                    </div>
+
+                    <div class="confidence-bar">
+                        <div class="bar-label">Lage Confidence (<70%)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill low" style="width: 8.3%">
+
+                            </div>
+
+                        </div>
+                              <div class="bar-text" >21/252 (8.3%)</div>
+                    </div>
+
+     <div class="confusion-matrix">
+                    <img src="confidence.jpg" alt="confidence Matrix" class="confusion-image">
+                </div>
+
+                </div>
+            </div>
+
+            <div class="error-analysis">
+                <div class="error-header">🔍 Error Pattern Analysis</div>
+
+                <div class="error-examples">
+                    <div class="error-box">
+                        <div class="error-type">🦖 Carnivoor Verwarring</div>
+                        <div class="error-detail">
+                            Velociraptor ↔ T-Rex<br>
+                            Gelijke lichaamsstructuur<br>
+                            Vergelijkbare poses
+                        </div>
+                    </div>
+
+                    <div class="error-box">
+                        <div class="error-type">🛡️ Defensieve Features</div>
+                        <div class="error-detail">
+                            Ankylosaurus perfect herkenning<br>
+                            Unieke pantserstructuur<br>
+                            Duidelijke kenmerken
+                        </div>
+                    </div>
+
+                    <div class="error-box">
+                        <div class="error-type">📐 Confidence Gaps</div>
+                        <div class="error-detail">
+                            23% verschil tussen<br>
+                            correcte vs foute confidence<br>
+                            Excellente calibratie
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_7.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">8 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_9.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 8 > 1) {
+                    window.location.href = 'dia_7.html';
+                } else if (e.key === 'ArrowRight' && 8 < 12) {
+                    window.location.href = 'dia_9.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

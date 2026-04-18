@@ -1,0 +1,471 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Conclusies</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .conclusions-hero {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(39, 174, 96, 0.3);
+        }
+
+        .hero-title {
+            font-size: 2.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .achievement-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .achievement-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        .conclusions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .achievements-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #27ae60;
+        }
+
+        .learnings-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .section-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .achievement-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #27ae60;
+        }
+
+        .achievement-icon {
+            font-size: 1.4em;
+            margin-top: 2px;
+        }
+
+        .achievement-text {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #2c3e50;
+        }
+
+        .learning-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+        }
+
+        .learning-icon {
+            font-size: 1.4em;
+            margin-top: 2px;
+        }
+
+        .learning-text {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #2c3e50;
+        }
+
+        .metrics-showcase {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .metrics-header {
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .metric-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .final-message {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+
+        .final-title {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .final-text {
+            font-size: 1.2em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .thank-you {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .journey-highlight {
+            background: rgba(255, 235, 59, 0.2);
+            border: 1px solid #ffeb3b;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: center;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 12/12</div>
+                
+        <div class="slide-title">🎯 Conclusies</div>
+
+        <div class="conclusions-hero">
+            <div class="hero-title">🏆 Mission Accomplished</div>
+            <div class="hero-subtitle">Deep Learning Dinosaur Classification</div>
+
+            <div class="achievement-badges">
+                <div class="achievement-badge">91.3% Accuracy</div>
+                <div class="achievement-badge">EfficientNetB0</div>
+                <div class="achievement-badge">303 Test Predictions</div>
+                <div class="achievement-badge">100% Ankylosaurus</div>
+            </div>
+        </div>
+
+        <div class="conclusions-grid">
+            <div class="achievements-section">
+                <div class="section-header">
+                    🎯 <span>Wat We Hebben Bereikt</span>
+                </div>
+
+                <ul class="achievement-list">
+                    <li class="achievement-item">
+                        <span class="achievement-icon">🏆</span>
+                        <div class="achievement-text">
+                            <strong>Excellent Performance:</strong> 91.3% validation accuracy, 6 van 7 klassen >84%
+                        </div>
+                    </li>
+
+                    <li class="achievement-item">
+                        <span class="achievement-icon">⚡</span>
+                        <div class="achievement-text">
+                            <strong>Efficiency Champion:</strong> EfficientNetB0 versloeg ResNet50V2 met 5× minder parameters
+                        </div>
+                    </li>
+
+                    <li class="achievement-item">
+                        <span class="achievement-icon">🔬</span>
+                        <div class="achievement-text">
+                            <strong>Systematic Approach:</strong> 3-fase progressive training met empirische model selectie
+                        </div>
+                    </li>
+
+                    <li class="achievement-item">
+                        <span class="achievement-icon">🔮</span>
+                        <div class="achievement-text">
+                            <strong>Complete Deliverable:</strong> 303 test predictions met 93.5% gemiddelde confidence
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="journey-highlight">
+                    📈 Training Journey: 84.5% → 88.5% → 91.3% (+6.8pp)
+                </div>
+            </div>
+
+            <div class="learnings-section">
+                <div class="section-header">
+                    💡 <span>Belangrijkste Lessen</span>
+                </div>
+
+                <ul class="achievement-list">
+                    <li class="learning-item">
+                        <span class="learning-icon">📏</span>
+                        <div class="learning-text">
+                            <strong>Groter ≠ Beter:</strong> EfficientNetB0 (84.5%) > ResNet50V2 (76.6%) bij 5× minder parameters
+                        </div>
+                    </li>
+
+                    <li class="learning-item">
+                        <span class="learning-icon">🧠</span>
+                        <div class="learning-text">
+                            <strong>Transfer Learning Magic:</strong> 84.5% na 3 epochs dankzij ImageNet pre-training
+                        </div>
+                    </li>
+
+                    <li class="learning-item">
+                        <span class="learning-icon">⚖️</span>
+                        <div class="learning-text">
+                            <strong>Class Weights Werken:</strong> Ankylosaurus 100%, Stegosaurus 97.1% ondanks kleine datasets
+                        </div>
+                    </li>
+
+                    <li class="learning-item">
+                        <span class="learning-icon">🛡️</span>
+                        <div class="learning-text">
+                            <strong>Early Stopping Effectief:</strong> 9/20 epochs in fine-tuning voorkomt overfitting
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="metrics-showcase">
+                <div class="metrics-header">📈 Finale Cijfers</div>
+
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-value">91.3%</div>
+                        <div class="metric-label">Validation Accuracy</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">+6.8%</div>
+                        <div class="metric-label">Totale Verbetering</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Ankylosaurus Score</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">95.9%</div>
+                        <div class="metric-label">Test Confidence</div>
+                    </div>
+                </div>
+
+                <div class="final-message">
+                    <div class="final-title">🦕 Van Uitdaging naar Succes</div>
+                    <div class="final-text">
+                        Systematische aanpak, data-driven beslissingen en progressive training<br>
+                        leidden tot een production-ready dinosaur classifier
+                    </div>
+                </div>
+
+                <div class="thank-you">
+                    🙏 Bedankt voor uw aandacht!<br>
+                    <span style="font-size: 0.8em;">Vragen over de implementatie?</span>
+                </div>
+            </div>
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_11.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">12 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="#" class="nav-btn" disabled>Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 12 > 1) {
+                    window.location.href = 'dia_11.html';
+                } else if (e.key === 'ArrowRight' && 12 < 12) {
+                    window.location.href = '#';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

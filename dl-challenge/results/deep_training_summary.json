@@ -1,0 +1,8 @@
+{
+  "selected_model": "EfficientNetB0",
+  "screening_accuracy": 0.8452380895614624,
+  "deep_training_best": 0.8849206566810608,
+  "improvement": 0.03968256711959839,
+  "best_epoch": 11,
+  "total_epochs": 15
+}

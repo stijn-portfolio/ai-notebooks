@@ -1,0 +1,483 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Test Predictions</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .predictions-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.3em;
+        }
+
+        .predictions-overview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+
+        .overview-card.total {
+            border-top-color: #3498db;
+        }
+
+        .overview-card.quality {
+            border-top-color: #27ae60;
+        }
+
+        .overview-card.format {
+            border-top-color: #f39c12;
+        }
+
+        .overview-card.distribution {
+            border-top-color: #e74c3c;
+        }
+
+        .overview-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .overview-number {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .overview-label {
+            font-size: 1em;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        .class-predictions {
+            margin: 40px 0;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #e67e22;
+        }
+
+        .section-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .prediction-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #dee2e6;
+            transition: transform 0.3s ease;
+        }
+
+        .prediction-card:hover {
+            transform: translateY(-3px);
+            border-color: #3498db;
+        }
+
+        .prediction-card.highest {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+        }
+
+        .prediction-card.lowest {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .prediction-emoji {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .prediction-class {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .prediction-count {
+            font-size: 1.6em;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .prediction-card.highest .prediction-count {
+            color: #27ae60;
+        }
+
+        .prediction-card.lowest .prediction-count {
+            color: #e74c3c;
+        }
+
+        .prediction-label {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+
+        .showcase-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .showcase-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .showcase-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .showcase-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .showcase-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .showcase-detail {
+            font-size: 0.9em;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .quality-indicator {
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .confidence-note {
+            background: rgba(52, 152, 219, 0.1);
+            color: #2980b9;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 0.95em;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 11/12</div>
+                
+        <div class="slide-title">🔮 Test Predictions</div>
+
+        <div class="predictions-header">
+            <strong>303 Test Afbeeldingen Succesvol Geclassificeerd</strong><br>
+            Klaar voor submission met 91.3% getraind model
+        </div>
+
+        <div class="predictions-overview">
+            <div class="overview-card total">
+                <div class="overview-icon">📊</div>
+                <div class="overview-number">303</div>
+                <div class="overview-label">Test Afbeeldingen<br>Geclassificeerd</div>
+            </div>
+
+            <div class="overview-card quality">
+                <div class="overview-icon">🎯</div>
+                <div class="overview-number">91.3%</div>
+                <div class="overview-label">Model Accuracy<br>bij Classificatie</div>
+            </div>
+
+            <div class="overview-card format">
+                <div class="overview-icon">📁</div>
+                <div class="overview-number">JPG</div>
+                <div class="overview-label">Uniform Image<br>Format</div>
+            </div>
+
+            <div class="overview-card distribution">
+                <div class="overview-icon">⚖️</div>
+                <div class="overview-number">35-54</div>
+                <div class="overview-label">Predictions<br>per Klasse</div>
+            </div>
+        </div>
+
+        <div class="quality-indicator">
+            ✅ Alle test afbeeldingen succesvol verwerkt met EfficientNetB0 model
+        </div>
+
+        <div class="confidence-note">
+            📊 Gemiddelde test confidence: 93.5% - Excellente model zekerheid
+        </div>
+
+        <div class="class-predictions">
+            <div class="section-header">
+                🦕 <span>Test Predictions per Dinosaurus Klasse</span>
+            </div>
+
+            <div class="predictions-grid">
+                <div class="prediction-card lowest">
+                    <div class="prediction-emoji">🛡️</div>
+                    <div class="prediction-class">Ankylosaurus</div>
+                    <div class="prediction-count">35</div>
+                    <div class="prediction-label">predictions (minste)</div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-emoji">⚔️</div>
+                    <div class="prediction-class">Stegosaurus</div>
+                    <div class="prediction-count">38</div>
+                    <div class="prediction-label">predictions</div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-emoji">🦖</div>
+                    <div class="prediction-class">T-Rex</div>
+                    <div class="prediction-count">39</div>
+                    <div class="prediction-label">predictions</div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-emoji">⚡</div>
+                    <div class="prediction-class">Velociraptor</div>
+                    <div class="prediction-count">42</div>
+                    <div class="prediction-label">predictions</div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-emoji">🦕</div>
+                    <div class="prediction-class">Diplodocus</div>
+                    <div class="prediction-count">44</div>
+                    <div class="prediction-label">predictions</div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-emoji">🎺</div>
+                    <div class="prediction-class">Parasaurolophus</div>
+                    <div class="prediction-count">51</div>
+                    <div class="prediction-label">predictions</div>
+                </div>
+
+                <div class="prediction-card highest">
+                    <div class="prediction-emoji">👑</div>
+                    <div class="prediction-class">Triceratops</div>
+                    <div class="prediction-count">54</div>
+                    <div class="prediction-label">predictions (meeste)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="showcase-section">
+            <div class="showcase-header">🚀 Test Predictions Deliverable</div>
+
+            <div class="showcase-grid">
+                <div class="showcase-card">
+                    <div class="showcase-icon">✅</div>
+                    <div class="showcase-title">Challenge Completed</div>
+                    <div class="showcase-detail">
+                        Alle 303 test afbeeldingen<br>
+                        succesvol geclassificeerd<br>
+                        Klaar voor submission
+                    </div>
+                </div>
+
+                <div class="showcase-card">
+                    <div class="showcase-icon">⚖️</div>
+                    <div class="showcase-title">Balanced Distribution</div>
+                    <div class="showcase-detail">
+                        Realistische spread 35-54<br>
+                        per klasse<br>
+                        Geen extreme bias
+                    </div>
+                </div>
+
+                <div class="showcase-card">
+                    <div class="showcase-icon">🏆</div>
+                    <div class="showcase-title">High Quality Model</div>
+                    <div class="showcase-detail">
+                        91.3% validation accuracy<br>
+                        EfficientNetB0 architecture<br>
+                        93.5% test confidence
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_10.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">11 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_12.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 11 > 1) {
+                    window.location.href = 'dia_10.html';
+                } else if (e.key === 'ArrowRight' && 11 < 12) {
+                    window.location.href = 'dia_12.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

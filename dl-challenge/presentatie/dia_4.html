@@ -1,0 +1,448 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Methodologie</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.6em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .methodology-overview {
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            border-radius: 15px;
+            font-size: 1.2em;
+        }
+
+        .pipeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin: 30px 0;
+            gap: 15px;
+        }
+
+        .phase {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            border-top: 5px solid #3498db;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phase.screening {
+            border-top-color: #e74c3c;
+        }
+
+        .phase.deep-training {
+            border-top-color: #f39c12;
+        }
+
+        .phase.finetuning {
+            border-top-color: #27ae60;
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .phase-header {
+            margin: 15px 0 10px 0;
+        }
+
+        .phase-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .phase-subtitle {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .phase-details {
+            font-size: 0.85em;
+            color: #34495e;
+            line-height: 1.4;
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .phase-goal {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.8em;
+            color: #2980b9;
+            font-weight: 600;
+        }
+
+        .phase-metrics {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.75em;
+            color: #6c757d;
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            color: #3498db;
+            font-weight: bold;
+            align-self: center;
+        }
+
+        .transfer-learning-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .tl-header {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .tl-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .tl-benefits {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .tl-benefit {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .benefit-icon {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .benefit-text {
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .models-tested {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .models-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .model-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 4/12</div>
+                
+        <div class="slide-title">🔬 Methodologie</div>
+
+        <div class="methodology-overview">
+            <strong>Systematische 3-Fase Aanpak</strong><br>
+            Progressive Training Pipeline met Transfer Learning
+        </div>
+
+        <div class="pipeline">
+            <div class="phase screening">
+                <div class="phase-number">1</div>
+                <div class="phase-header">
+                    <div class="phase-title">🔍 Screening</div>
+                    <div class="phase-subtitle">Model Selectie</div>
+                </div>
+                <div class="phase-goal">
+                    Doel: Beste architectuur identificeren
+                </div>
+                <div class="phase-details">
+                    <strong>Aanpak:</strong><br>
+                    • 4 verschillende CNN architecturen<br>
+                    • Snelle 3-epoch training<br>
+                    • Validation accuracy vergelijking<br>
+                    • Training tijd meting<br>
+                    • Efficiency score berekening<br><br>
+
+                    <strong>Technieken:</strong><br>
+                    • Transfer learning (ImageNet)<br>
+                    • Data augmentation<br>
+                    • Class weight balancing
+                </div>
+                <div class="phase-metrics">
+                    Metric: Validation Accuracy<br>
+                    Winner: EfficientNetB0 (84.5%)
+                </div>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="phase deep-training">
+                <div class="phase-number">2</div>
+                <div class="phase-header">
+                    <div class="phase-title">🎯 Deep Training</div>
+                    <div class="phase-subtitle">Intensieve Optimalisatie</div>
+                </div>
+                <div class="phase-goal">
+                    Doel: Maximale prestaties uit gekozen model
+                </div>
+                <div class="phase-details">
+                    <strong>Aanpak:</strong><br>
+                    • 15 epochs uitgebreide training<br>
+                    • Advanced callbacks systeem<br>
+                    • Learning rate scheduling<br>
+                    • Model checkpointing<br>
+                    • Overfitting preventie<br><br>
+
+                    <strong>Callbacks:</strong><br>
+                    • Early stopping (patience=8)<br>
+                    • ReduceLROnPlateau<br>
+                    • ModelCheckpoint (best weights)
+                </div>
+                <div class="phase-metrics">
+                    Verbetering: 84.5% → 88.5%<br>
+                    Gain: +4.0 procentpunten
+                </div>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="phase finetuning">
+                <div class="phase-number">3</div>
+                <div class="phase-header">
+                    <div class="phase-title">🔥 Fine-tuning</div>
+                    <div class="phase-subtitle">Finale Verfijning</div>
+                </div>
+                <div class="phase-goal">
+                    Doel: Laatste performance boost
+                </div>
+                <div class="phase-details">
+                    <strong>Aanpak:</strong><br>
+                    • Strategic layer unfreezing (25%)<br>
+                    • Zeer lage learning rate (0.0001)<br>
+                    • 20 epochs met patience=5<br>
+                    • Overfitting monitoring<br>
+                    • Conservatieve optimalisatie<br><br>
+
+                    <strong>Strategie:</strong><br>
+                    • Alleen laatste 60 layers trainable<br>
+                    • Agressieve early stopping<br>
+                    • Overfitting protection via min_delta=0.002
+                </div>
+                <div class="phase-metrics">
+                    Finale: 88.5% → 91.3%<br>
+                    Total gain: +6.8 procentpunten
+                </div>
+            </div>
+        </div>
+
+        <div class="transfer-learning-section">
+            <div class="tl-header">🧠 Transfer Learning</div>
+
+            <div class="tl-content">
+                <div class="tl-benefits">
+                    <div class="tl-benefit">
+                        <div class="benefit-icon">⚡</div>
+                        <div class="benefit-text">Snellere Convergentie</div>
+                    </div>
+                    <div class="tl-benefit">
+                        <div class="benefit-icon">🎯</div>
+                        <div class="benefit-text">Hogere Accuracy</div>
+                    </div>
+                    <div class="tl-benefit">
+                        <div class="benefit-icon">💾</div>
+                        <div class="benefit-text">Minder Data Nodig</div>
+                    </div>
+                    <div class="tl-benefit">
+                        <div class="benefit-icon">🚀</div>
+                        <div class="benefit-text">ImageNet Features</div>
+                    </div>
+                </div>
+
+                <div class="models-tested">
+                    <strong>Geteste Architecturen:</strong>
+                    <div class="models-list">
+                        <div class="model-item">MobileNetV2</div>
+                        <div class="model-item">EfficientNetB0 ✓</div>
+                        <div class="model-item">EfficientNetB3</div>
+                        <div class="model-item">ResNet50V2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_3.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">4 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_5.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 4 > 1) {
+                    window.location.href = 'dia_3.html';
+                } else if (e.key === 'ArrowRight' && 4 < 12) {
+                    window.location.href = 'dia_5.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

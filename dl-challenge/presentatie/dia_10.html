@@ -1,0 +1,408 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Technische Inzichten</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .insights-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.3em;
+        }
+
+        .key-insights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .insight-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-left: 6px solid #3498db;
+        }
+
+        .insight-card.efficiency {
+            border-left-color: #27ae60;
+        }
+
+        .insight-card.transfer {
+            border-left-color: #e74c3c;
+        }
+
+        .insight-card.progressive {
+            border-left-color: #f39c12;
+        }
+
+        .insight-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .insight-content {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #34495e;
+        }
+
+        .highlight-stat {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+            color: #2980b9;
+            text-align: center;
+        }
+
+        .comparison-simple {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .model-simple {
+            text-align: center;
+        }
+
+        .model-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .model-accuracy {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .winner .model-accuracy {
+            color: #27ae60;
+        }
+
+        .vs-arrow {
+            font-size: 2em;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .bottom-insights {
+            margin-top: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .bottom-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .learnings-simple {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .learning-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .learning-emoji {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .learning-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .learning-text {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .early-stop-highlight {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid #e74c3c;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: #c0392b;
+            text-align: center;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 10/12</div>
+                
+        <div class="slide-title">🔧 Technische Inzichten</div>
+
+        <div class="insights-header">
+            <strong>Key Technical Learnings</strong><br>
+            De belangrijkste inzichten uit ons deep learning experiment
+        </div>
+
+        <div class="key-insights-grid">
+            <div class="insight-card efficiency">
+                <div class="insight-header">
+                    ⚡ <span>Efficiency Sweet Spot</span>
+                </div>
+                <div class="insight-content">
+                    EfficientNetB0 bewees dat <strong>groter niet altijd beter</strong> is in deep learning.
+
+                    <div class="comparison-simple">
+                        <div class="model-simple">
+                            <div class="model-name">ResNet50V2</div>
+                            <div class="model-accuracy">76.6%</div>
+                            <div style="font-size: 0.8em; color: #6c757d;">24M parameters</div>
+                        </div>
+                        <div class="vs-arrow">VS</div>
+                        <div class="model-simple winner">
+                            <div class="model-name">EfficientNetB0</div>
+                            <div class="model-accuracy">84.5%</div>
+                            <div style="font-size: 0.8em; color: #6c757d;">4.4M parameters</div>
+                        </div>
+                    </div>
+
+                    <div class="highlight-stat">
+                        5× minder parameters, 9.9% hogere accuracy
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-card transfer">
+                <div class="insight-header">
+                    🧠 <span>Transfer Learning Power</span>
+                </div>
+                <div class="insight-content">
+                    ImageNet pre-training gaf ons een <strong>enorme voorsprong</strong>. Zonder transfer learning hadden we vanaf nul moeten beginnen.
+
+                    <div class="highlight-stat">
+                        84.5% accuracy na slechts 3 epochs screening
+                    </div>
+
+                    <strong>Waarom het werkte:</strong><br>
+                    • Frozen backbone behoudt ImageNet features<br>
+                    • Custom head leert dinosaurus-specifieke patronen<br>
+                    • Strategic unfreezing verfijnt features (91.3% finale)
+                </div>
+            </div>
+
+            <div class="insight-card progressive">
+                <div class="insight-header">
+                    📈 <span>Progressive Training</span>
+                </div>
+                <div class="insight-content">
+                    Onze 3-fase aanpak was <strong>cruciaal voor succes</strong>. Elke fase had een specifiek doel en bouwde voort op de vorige.
+
+                    <div class="highlight-stat">
+                        84.5% → 88.5% → 91.3% = +6.8% totale winst
+                    </div>
+
+                    <strong>Systematische aanpak:</strong><br>
+                    • Screening: model keuze op basis van data<br>
+                    • Deep training: maximale frozen potential (+4.0%)<br>
+                    • Fine-tuning: laatste optimalisatie push (+2.8%)
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-header">
+                    🛡️ <span>Overfitting Prevention</span>
+                </div>
+                <div class="insight-content">
+                    Met een kleine dataset (1264 afbeeldingen) was <strong>overfitting onze grootste vijand</strong>. Multiple layers van bescherming waren essentieel.
+
+                    <div class="early-stop-highlight">
+                        ⏹️ Early stopping: 9/20 epochs in fine-tuning<br>
+                        Best weights automatisch hersteld
+                    </div>
+
+                    <strong>Multi-layer strategie:</strong><br>
+                    • Data augmentation: kunstmatige diversiteit<br>
+                    • Early stopping: automatic training halt<br>
+                    • Dropout layers: regularization in classifier head<br>
+                    • Conservative learning rates: 0.0001 in fine-tuning
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-insights">
+            <div class="bottom-header">🔑 Belangrijkste Lessen</div>
+
+            <div class="learnings-simple">
+                <div class="learning-box">
+                    <div class="learning-emoji">🎯</div>
+                    <div class="learning-title">Data-Driven Keuzes</div>
+                    <div class="learning-text">EfficientNetB0 empirisch beter dan intuïtie</div>
+                </div>
+
+                <div class="learning-box">
+                    <div class="learning-emoji">⚖️</div>
+                    <div class="learning-title">Balance is Alles</div>
+                    <div class="learning-text">Performance vs Parameters vs Training time</div>
+                </div>
+
+                <div class="learning-box">
+                    <div class="learning-emoji">🛡️</div>
+                    <div class="learning-title">Early Stopping Works</div>
+                    <div class="learning-text">Automatische overfitting preventie effectief</div>
+                </div>
+            </div>
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_9.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">10 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_11.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 10 > 1) {
+                    window.location.href = 'dia_9.html';
+                } else if (e.key === 'ArrowRight' && 10 < 12) {
+                    window.location.href = 'dia_11.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

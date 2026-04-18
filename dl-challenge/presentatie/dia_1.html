@@ -1,0 +1,213 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Introductie</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .title {
+            font-size: 3.5em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 2em;
+            color: #34495e;
+            margin-bottom: 40px;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .dinosaur-emoji {
+            font-size: 4em;
+            margin: 30px 0;
+            animation: bounce 2s infinite;
+            text-align: center;
+        }
+
+        .team-info {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px auto;
+            font-size: 1.3em;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .date {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .challenge-badge {
+            background: linear-gradient(45deg, #fd79a8, #e84393);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 20px auto;
+            display: block;
+            width: fit-content;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 1/12</div>
+                
+        <div class="title">🦕 Deep Learning Challenge</div>
+        <div class="subtitle">Dinosaur Classification</div>
+
+        <div class="dinosaur-emoji">🦴🦖🦕</div>
+
+        <div class="challenge-badge">
+            AI Cursus - Toegepaste Informatica
+        </div>
+
+        <div class="team-info">
+            <strong>Stijn De Beuckeleer</strong><br>            
+            3WT Bachelor Toegepaste Informatica<br>
+        </div>
+
+        <div class="date">
+            Presentatie: 05 June 2025
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="#" class="nav-btn" disabled>← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">1 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_2.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 1 > 1) {
+                    window.location.href = '#';
+                } else if (e.key === 'ArrowRight' && 1 < 12) {
+                    window.location.href = 'dia_2.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

@@ -1,0 +1,458 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Training Journey</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+       .slide-title {
+           font-size: 2.8em;
+           color: #2c3e50;
+           text-align: center;
+           margin-bottom: 40px;
+           font-weight: bold;
+       }
+
+       .journey-header {
+           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+           color: white;
+           padding: 25px;
+           border-radius: 15px;
+           text-align: center;
+           margin-bottom: 30px;
+           font-size: 1.2em;
+       }
+
+       .progress-timeline {
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           margin: 40px 0;
+           position: relative;
+       }
+
+       .progress-line {
+           position: absolute;
+           top: 50%;
+           left: 10%;
+           right: 10%;
+           height: 6px;
+           background: linear-gradient(90deg, #e74c3c, #f39c12, #27ae60);
+           border-radius: 3px;
+           z-index: 1;
+       }
+
+       .milestone {
+           background: white;
+           border-radius: 20px;
+           padding: 25px;
+           text-align: center;
+           box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+           position: relative;
+           z-index: 2;
+           border: 4px solid #e74c3c;
+           min-width: 280px;
+       }
+
+       .milestone.deep {
+           border-color: #f39c12;
+       }
+
+       .milestone.final {
+           border-color: #27ae60;
+           transform: scale(1.05);
+       }
+
+       .milestone-badge {
+           position: absolute;
+           top: -15px;
+           left: 50%;
+           transform: translateX(-50%);
+           background: #e74c3c;
+           color: white;
+           padding: 8px 16px;
+           border-radius: 20px;
+           font-size: 0.8em;
+           font-weight: bold;
+       }
+
+       .milestone.deep .milestone-badge {
+           background: #f39c12;
+       }
+
+       .milestone.final .milestone-badge {
+           background: #27ae60;
+       }
+
+       .accuracy-circle {
+           width: 120px;
+           height: 120px;
+           border-radius: 50%;
+           background: linear-gradient(135deg, #e74c3c, #c0392b);
+           color: white;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: center;
+           margin: 0 auto 15px auto;
+           position: relative;
+           box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+       }
+
+       .milestone.deep .accuracy-circle {
+           background: linear-gradient(135deg, #f39c12, #d68910);
+       }
+
+       .milestone.final .accuracy-circle {
+           background: linear-gradient(135deg, #27ae60, #229954);
+       }
+
+       .accuracy-percent {
+           font-size: 1.8em;
+           font-weight: bold;
+           margin-bottom: 2px;
+       }
+
+       .accuracy-label {
+           font-size: 0.7em;
+           opacity: 0.9;
+       }
+
+       .milestone-title {
+           font-size: 1.3em;
+           font-weight: bold;
+           color: #2c3e50;
+           margin-bottom: 10px;
+       }
+
+       .milestone-details {
+           font-size: 0.9em;
+           color: #6c757d;
+           line-height: 1.4;
+       }
+
+       .early-stop-indicator {
+           background: rgba(231, 76, 60, 0.1);
+           border: 1px solid #e74c3c;
+           border-radius: 8px;
+           padding: 8px;
+           margin-top: 10px;
+           font-size: 0.8em;
+           color: #c0392b;
+           font-weight: 600;
+       }
+
+       .improvement-arrow {
+           position: absolute;
+           top: 50%;
+           right: -25px;
+           transform: translateY(-50%);
+           font-size: 2em;
+           color: #27ae60;
+           z-index: 3;
+       }
+
+       .milestone:last-child .improvement-arrow {
+           display: none;
+       }
+
+       .stats-summary {
+           margin-top: 40px;
+           display: grid;
+           grid-template-columns: repeat(4, 1fr);
+           gap: 20px;
+       }
+
+       .stat-card {
+           background: white;
+           padding: 25px;
+           border-radius: 15px;
+           text-align: center;
+           box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+           border-top: 4px solid #3498db;
+       }
+
+       .stat-card.improvement {
+           border-top-color: #27ae60;
+       }
+
+       .stat-card.time {
+           border-top-color: #f39c12;
+       }
+
+       .stat-card.epochs {
+           border-top-color: #9b59b6;
+       }
+
+       .stat-number {
+           font-size: 2.2em;
+           font-weight: bold;
+           color: #2c3e50;
+           margin-bottom: 5px;
+       }
+
+       .stat-label {
+           font-size: 1em;
+           color: #7f8c8d;
+           font-weight: 600;
+       }
+
+       .journey-insights {
+           margin-top: 30px;
+           padding: 25px;
+           background: linear-gradient(135deg, #fd79a8, #e84393);
+           color: white;
+           border-radius: 15px;
+       }
+
+       .insights-header {
+           font-size: 1.5em;
+           font-weight: bold;
+           text-align: center;
+           margin-bottom: 20px;
+       }
+
+       .insights-grid {
+           display: grid;
+           grid-template-columns: repeat(3, 1fr);
+           gap: 15px;
+       }
+
+       .insight-item {
+           background: rgba(255, 255, 255, 0.1);
+           padding: 15px;
+           border-radius: 10px;
+           text-align: center;
+           backdrop-filter: blur(10px);
+       }
+
+       .insight-icon {
+           font-size: 1.8em;
+           margin-bottom: 8px;
+       }
+
+       .insight-text {
+           font-size: 0.9em;
+           font-weight: 600;
+       }
+   
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 6/12</div>
+                
+       <div class="slide-title">📈 Training Journey</div>
+
+       <div class="journey-header">
+           <strong>EfficientNetB0 Progressive Improvement</strong><br>
+           Van 84.5% naar 91.3% in 3 strategische fasen
+       </div>
+
+       <div class="progress-timeline">
+           <div class="progress-line"></div>
+
+           <div class="milestone screening">
+               <div class="milestone-badge">SCREENING</div>
+               <div class="accuracy-circle">
+                   <div class="accuracy-percent">84.5%</div>
+                   <div class="accuracy-label">Baseline</div>
+               </div>
+               <div class="milestone-title">Model Selectie</div>
+               <div class="milestone-details">
+                   3 epochs snelle training<br>
+                   EfficientNetB0 gekozen<br>
+                   Beste balans prestatie/efficiency
+               </div>
+               <div class="improvement-arrow">→</div>
+           </div>
+
+           <div class="milestone deep">
+               <div class="milestone-badge">DEEP TRAINING</div>
+               <div class="accuracy-circle">
+                   <div class="accuracy-percent">88.5%</div>
+                   <div class="accuracy-label">+4.0pp</div>
+               </div>
+               <div class="milestone-title">Optimalisatie</div>
+               <div class="milestone-details">
+                   15 epochs volledige training<br>
+                   Advanced callbacks<br>
+                   Learning rate scheduling<br>
+                   Best epoch: 11
+               </div>
+               <div class="improvement-arrow">→</div>
+           </div>
+
+           <div class="milestone final">
+               <div class="milestone-badge">FINE-TUNING</div>
+               <div class="accuracy-circle">
+                   <div class="accuracy-percent">91.3%</div>
+                   <div class="accuracy-label">+2.8pp</div>
+               </div>
+               <div class="milestone-title">Finale Verfijning</div>
+               <div class="milestone-details">
+                   Strategic layer unfreezing<br>
+                   Conservative optimization<br>
+                   <strong>FINALE RESULTAAT</strong>
+               </div>
+               <div class="early-stop-indicator">
+                   ⏹️ Early Stop: 9/20 epochs<br>
+                   Best weights hersteld (epoch 4)
+               </div>
+           </div>
+       </div>
+
+       <div class="stats-summary">
+           <div class="stat-card improvement">
+               <div class="stat-number">+6.8</div>
+               <div class="stat-label">Procentpunten<br>Verbetering</div>
+           </div>
+           <div class="stat-card time">
+               <div class="stat-number">~15</div>
+               <div class="stat-label">minuten<br>Totale Training</div>
+           </div>
+           <div class="stat-card epochs">
+               <div class="stat-number">27</div>
+               <div class="stat-label">Werkelijke<br>Epochs</div>
+           </div>
+           <div class="stat-card">
+               <div class="stat-number">4.4M</div>
+               <div class="stat-label">Model<br>Parameters</div>
+           </div>
+       </div>
+
+       <div class="journey-insights">
+           <div class="insights-header">🚀 Journey Insights</div>
+
+           <div class="insights-grid">
+               <div class="insight-item">
+                   <div class="insight-icon">🎯</div>
+                   <div class="insight-text">Grootste winst in<br>Deep Training fase</div>
+               </div>
+               <div class="insight-item">
+                   <div class="insight-icon">🛡️</div>
+                   <div class="insight-text">Early stopping<br>voorkomt overfitting</div>
+               </div>
+               <div class="insight-item">
+                   <div class="insight-icon">⚡</div>
+                   <div class="insight-text">Efficient model<br>snelle convergentie</div>
+               </div>
+           </div>
+       </div>
+   
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_5.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">6 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_7.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 6 > 1) {
+                    window.location.href = 'dia_5.html';
+                } else if (e.key === 'ArrowRight' && 6 < 12) {
+                    window.location.href = 'dia_7.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

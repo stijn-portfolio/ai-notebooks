@@ -1,0 +1,357 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dataset Overview</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .dataset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .dataset-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .train-section {
+            border-left-color: #00b894;
+        }
+
+        .test-section {
+            border-left-color: #fd79a8;
+        }
+
+        .section-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dataset-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .class-distribution {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .class-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .class-emoji {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .class-name {
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .class-count {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .balance-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .balance-ratio {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffeb3b;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 3/12</div>
+                
+        <div class="slide-title">📊 Dataset Overview</div>
+
+        <div class="dataset-grid">
+            <div class="dataset-section train-section">
+                <div class="section-header">
+                    🎯 Training Set
+                </div>
+                <div class="dataset-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">1264</div>
+                        <div class="stat-label">Totaal Afbeeldingen</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1012</div>
+                        <div class="stat-label">Training (80%)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">252</div>
+                        <div class="stat-label">Validatie (20%)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Klassen</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dataset-section test-section">
+                <div class="section-header">
+                    🔮 Test Set
+                </div>
+                <div class="dataset-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">303</div>
+                        <div class="stat-label">Test Afbeeldingen</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">???</div>
+                        <div class="stat-label">Geen Labels</div>
+                    </div>
+                    <div class="stat-item">
+                      <div class="stat-number">* x *</div>
+    <div class="stat-label">Model Input<br>(224x224 resized)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">JPG</div>
+                        <div class="stat-label">Format</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="class-distribution">
+            <div class="section-header" style="color: white; justify-content: center;">
+                🦕 Klasse Distributie (Training)
+            </div>
+
+            <div class="class-grid">
+                <div class="class-item">
+                    <div class="class-emoji">🛡️</div>
+                    <div class="class-name">Ankylosaurus</div>
+                    <div class="class-count">120 afbeeldingen</div>
+                </div>
+                <div class="class-item">
+                    <div class="class-emoji">🦕</div>
+                    <div class="class-name">Diplodocus</div>
+                    <div class="class-count">164 afbeeldingen</div>
+                </div>
+                <div class="class-item">
+                    <div class="class-emoji">🎺</div>
+                    <div class="class-name">Parasaurolophus</div>
+                    <div class="class-count">147 afbeeldingen</div>
+                </div>
+                <div class="class-item">
+                    <div class="class-emoji">⚔️</div>
+                    <div class="class-name">Stegosaurus</div>
+                    <div class="class-count">113 afbeeldingen</div>
+                </div>
+                <div class="class-item">
+                    <div class="class-emoji">🦖</div>
+                    <div class="class-name">T-Rex</div>
+                    <div class="class-count">125 afbeeldingen</div>
+                </div>
+                <div class="class-item">
+                    <div class="class-emoji">👑</div>
+                    <div class="class-name">Triceratops</div>
+                    <div class="class-count">167 afbeeldingen</div>
+                </div>
+                <div class="class-item">
+                    <div class="class-emoji">⚡</div>
+                    <div class="class-name">Velociraptor</div>
+                    <div class="class-count">176 afbeeldingen</div>
+                </div>
+            </div>
+
+          <div class="balance-info">
+    <div>Dataset Balans Analyse & Oplossing</div>
+    <div class="balance-ratio">Imbalance Ratio: 1.56 (Acceptabel)</div>
+    <div style="font-size: 0.9em; margin-top: 10px;">
+        Min: 113 (Stegosaurus) • Max: 176 (Velociraptor)
+    </div>
+    <div style="font-size: 0.85em; margin-top: 8px; color: #27ae60; font-weight: 600;">
+        🔧 Oplossing: Class weights => gewogen loss function
+    </div>
+</div>
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_2.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">3 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_4.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 3 > 1) {
+                    window.location.href = 'dia_2.html';
+                } else if (e.key === 'ArrowRight' && 3 < 12) {
+                    window.location.href = 'dia_4.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    

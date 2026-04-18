@@ -1,0 +1,491 @@
+
+    <!DOCTYPE html>
+    <html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Problemen & Oplossingen</title>
+        <style>
+            
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 600px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #0984e3;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+            
+        .slide-title {
+            font-size: 2.8em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .challenges-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .problem-solution-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .challenge-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-left: 6px solid #e74c3c;
+        }
+
+        .challenge-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .challenge-icon {
+            font-size: 2em;
+        }
+
+        .challenge-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .challenge-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .problem-side {
+            padding: 25px;
+            background: #fff5f5;
+            border-right: 2px solid #fee;
+        }
+
+        .solution-side {
+            padding: 25px;
+            background: #f0fff4;
+        }
+
+        .side-header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .problem-header {
+            color: #e74c3c;
+        }
+
+        .solution-header {
+            color: #27ae60;
+        }
+
+        .content-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-item {
+            margin: 12px 0;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .problem-item {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+            color: #c0392b;
+        }
+
+        .solution-item {
+            background: rgba(39, 174, 96, 0.1);
+            border-left: 3px solid #27ae60;
+            color: #27ae60;
+        }
+
+        .impact-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .impact-header {
+            font-size: 1.6em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .impact-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .impact-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .impact-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .impact-detail {
+            font-size: 0.9em;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .lessons-learned {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .lessons-header {
+            font-size: 1.3em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .lessons-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .lesson-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .lesson-emoji {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+    
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <div class="slide">
+                <div class="slide-number">Dia 9/12</div>
+                
+        <div class="slide-title">⚡ Problemen & Oplossingen</div>
+
+        <div class="challenges-header">
+            <strong>Van Uitdagingen naar Doorbraken</strong><br>
+            Hoe we de problemen systematisch hebben aangepakt
+        </div>
+
+        <div class="problem-solution-grid">
+            <div class="challenge-card">
+                <div class="challenge-header">
+                    <span class="challenge-icon">⚖️</span>
+                    <span class="challenge-title">Data Imbalance</span>
+                </div>
+                <div class="challenge-content">
+                    <div class="problem-side">
+                        <div class="side-header problem-header">
+                            ❌ <span>Probleem</span>
+                        </div>
+                        <ul class="content-list">
+                            <li class="content-item problem-item">
+                                <strong>Ongelijke distributie:</strong> 113-176 samples per klasse (ratio 1.56)
+                            </li>
+                            <li class="content-item problem-item">
+                                <strong>Bias risico:</strong> Model favoriseert Velociraptor (176 samples)
+                            </li>
+                            <li class="content-item problem-item">
+                                <strong>Ondervertegenwoordiging:</strong> Stegosaurus benadeeld (113 samples)
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="solution-side">
+                        <div class="side-header solution-header">
+                            ✅ <span>Oplossing</span>
+                        </div>
+                        <ul class="content-list">
+                            <li class="content-item solution-item">
+                                <strong>Class weights:</strong> Automatische gewichten berekend: total_samples / (n_classes * count)
+                            </li>
+                            <li class="content-item solution-item">
+                                <strong>Keras implementatie:</strong> class_weight parameter in model.fit()
+                            </li>
+                            <li class="content-item solution-item">
+                                <strong>Resultaat:</strong> Ankylosaurus 100%, Stegosaurus 97.1% accuracy!
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="challenge-card">
+                <div class="challenge-header">
+                    <span class="challenge-icon">🚗</span>
+                    <span class="challenge-title">Data Cleaning - Auto Vervuiling</span>
+                </div>
+                <div class="challenge-content">
+                    <div class="problem-side">
+                        <div class="side-header problem-header">
+                            ❌ <span>Probleem</span>
+                        </div>
+                        <ul class="content-list">
+                            <li class="content-item problem-item">
+                                <strong>Verkeerde labels:</strong> Auto afbeeldingen in Velociraptor klasse
+                            </li>
+                            <li class="content-item problem-item">
+                                <strong>Data vervuiling:</strong> car_*.jpg bestanden niet relevant
+                            </li>
+                            <li class="content-item problem-item">
+                                <strong>Training bias:</strong> Model leert auto's als Velociraptor
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="solution-side">
+                        <div class="side-header solution-header">
+                            ✅ <span>Data Cleaning</span>
+                        </div>
+                        <ul class="content-list">
+                            <li class="content-item solution-item">
+                                <strong>Identificatie:</strong> car_ prefix detectie in bestandsnamen
+                            </li>
+                            <li class="content-item solution-item">
+                                <strong>Verplaatsing:</strong> Auto bestanden naar aparte 'car' map
+                            </li>
+                            <li class="content-item solution-item">
+                                <strong>Clean dataset:</strong> Alleen echte dinosaurus afbeeldingen voor training
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="challenge-card">
+                <div class="challenge-header">
+                    <span class="challenge-icon">🦖</span>
+                    <span class="challenge-title">Velociraptor-T-Rex Verwarring</span>
+                </div>
+                <div class="challenge-content">
+                    <div class="problem-side">
+                        <div class="side-header problem-header">
+                            ❌ <span>Challenge</span>
+                        </div>
+                        <ul class="content-list">
+                            <li class="content-item problem-item">
+                                <strong>Laagste accuracy:</strong> Velociraptor 75.6%, T-Rex 84.6%
+                            </li>
+                            <li class="content-item problem-item">
+                                <strong>Hoogste verwarring:</strong> 6x Velociraptor → T-Rex fouten
+                            </li>
+                            <li class="content-item problem-item">
+                                <strong>Visuele gelijkenis:</strong> Beide carnivoren met vergelijkbare anatomie
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="solution-side">
+                        <div class="side-header solution-header">
+                            ✅ <span>Aanpak & Acceptatie</span>
+                        </div>
+                        <ul class="content-list">
+                            <li class="content-item solution-item">
+                                <strong>Data augmentation:</strong> Extra variatie in poses, rotaties en zoom
+                            </li>
+                            <li class="content-item solution-item">
+                                <strong>Fine-tuning focus:</strong> Strategic layer unfreezing voor feature refinement
+                            </li>
+                            <li class="content-item solution-item">
+                                <strong>Realistisch resultaat:</strong> 75.6% acceptabel voor moeilijke carnivoor klasse
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="impact-section">
+            <div class="impact-header">🚀 Impact van Oplossingen</div>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">📊</div>
+                    <div class="impact-title">Perfect Balance</div>
+                    <div class="impact-detail">
+                        Class weights resulteerden in<br>
+                        Ankylosaurus 100% accuracy<br>
+                        Stegosaurus 97.1% (was kleinste klasse)
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-icon">🔧</div>
+                    <div class="impact-title">Clean Data Quality</div>
+                    <div class="impact-detail">
+                        Auto-vervuiling geëlimineerd<br>
+                        Systematische data cleaning<br>
+                        91.3% finale accuracy bereikt
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-icon">🎯</div>
+                    <div class="impact-title">Realistic Expectations</div>
+                    <div class="impact-detail">
+                        Velociraptor 75.6% vs T-Rex 84.6%<br>
+                        Carnivoor verwarring erkend<br>
+                        Overall 91.3% excellent result
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="dia_8.html" class="nav-btn" >← Vorige</a>
+            <a href="dia_1.html" class="nav-btn">🏠 Home</a>
+            <div class="slide-counter">9 / 12</div>
+            <a href="overzicht.html" class="nav-btn">📋 Overzicht</a>
+            <a href="dia_10.html" class="nav-btn" >Volgende →</a>
+        </div>
+
+        <script>
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && 9 > 1) {
+                    window.location.href = 'dia_8.html';
+                } else if (e.key === 'ArrowRight' && 9 < 12) {
+                    window.location.href = 'dia_10.html';
+                } else if (e.key === 'Home') {
+                    window.location.href = 'dia_1.html';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    
