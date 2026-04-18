@@ -8,7 +8,7 @@ Twee challenges uit de cursus Artificial Intelligence (Thomas More, Toegepaste I
 
 Classificatie van dinosaurus afbeeldingen in 7 soorten met behulp van transfer learning (EfficientNetB0). Systematische 3-fase aanpak: screening, deep training en fine-tuning.
 
-**Resultaat: 91.3% validation accuracy** | [Bekijk de presentatie](https://stijn-portfolio.github.io/ai-notebooks/dl-challenge/presentatie/overzicht.html)
+**Resultaat: 91.3% validation accuracy**
 
 ### Dataset voorbeelden
 
@@ -39,6 +39,12 @@ Het model is niet alleen accuraat, maar ook zelfverzekerd bij correcte voorspell
 1. **Screening** - 4 CNN architecturen vergeleken (MobileNetV2, EfficientNetB0, EfficientNetB3, ResNet50V2)
 2. **Deep training** - 15 epochs met callbacks (early stopping, learning rate scheduling, checkpointing)
 3. **Fine-tuning** - strategisch unfreezen van de laatste 25% layers met lage learning rate
+
+### Presentatie
+
+Interactieve HTML presentatie met 12 slides over de volledige aanpak en resultaten:
+
+[![Bekijk de presentatie](images/dl_presentatie.png)](https://stijn-portfolio.github.io/ai-notebooks/dl-challenge/presentatie/overzicht.html)
 
 ### Bestanden
 
